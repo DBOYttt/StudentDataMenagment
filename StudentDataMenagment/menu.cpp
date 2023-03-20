@@ -33,10 +33,17 @@ void MenuOptions::getinformation(string& inf1, string& inf2, int& inf3)
 
 }
 
-int MenuOptions::search_id()
+int MenuOptions::get_id()
 {
     int search_id;
-    cout << "Podaj ID studenta do wyszukania: ";
+    cout << "Podaj ID studenta: ";
     cin >> search_id;
     return search_id;
 }
+
+string MenuOptions::convid(int& ID)
+{
+    string str_id = to_string(ID);
+    return str_id;
+}
+

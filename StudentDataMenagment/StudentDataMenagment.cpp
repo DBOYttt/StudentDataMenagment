@@ -15,6 +15,7 @@ int main()
 	int ID;
 	int age;
 	int option;
+	string id_str;
 
 
 	//adding menu options
@@ -39,13 +40,14 @@ int main()
 				db.saveinformation(++ID, firstName, lastName, age);
 				break;
 			case 2:
-				cout << "gut" << endl;
+				ID = menu.get_id();
+				id_str = menu.convid(ID);
+				db.deleteStudent("Input.txt", id_str);
 				break;
 			case 3:
-				cout << "gut" << endl;
 				break;
 			case 4:
-				ID = menu.search_id();
+				ID = menu.get_id();
 				db.findstudent(ID);
 				break;
 			case 0:

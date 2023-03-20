@@ -12,7 +12,8 @@ public:
 
     void getinformation(string& inf1, string& inf2, int& inf3);
 
-    int search_id();
+    int get_id();
+    string convid(int &ID);
 private:
     std::vector<std::string> options_;
 };

@@ -79,3 +79,49 @@ int database::findstudent(int & search_id)
 
 	return 0;
 }
+
+vector<vector<string>> database::readData(string fileName)
+{
+	vector<vector<string>> data;
+	ifstream file(fileName);
+	string line;
+	while (getline(file, line)) {
+		vector<string> record;
+		size_t pos = 0;
+		string token;
+		while ((pos = line.find(";")) != string::npos) {
+			token = line.substr(0, pos);
+			record.push_back(token);
+			line.erase(0, pos + 1);
+		}
+		record.push_back(line);
+		data.push_back(record);
+	}
+	file.close();
+	return data;
+}
+
+void database::writeData(string fileName, vector<vector<string>> data)
+{
+		ofstream file(fileName);
+		for (vector<string> record : data) {
+			for (int i = 0; i < record.size() - 1; i++) {
+				file << record[i] << ";";
+			}
+			file << record[record.size() - 1] << "\n";
+		}
+		file.close();
+}
+
+void database::deleteStudent(string fileName, string id)
+{
+	vector<vector<string>> data = readData(fileName);
+		for (int i = 0; i < data.size(); i++) {
+			if (data[i][0] == id) {
+				data.erase(data.begin() + i);
+				break;
+			}
+		}
+		writeData(fileName, data);
+}
+
