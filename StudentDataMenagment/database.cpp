@@ -1,4 +1,4 @@
-﻿#include "database.h"
+#include "database.h"
 
 void database::saveinformation(int& inf, string& inf2, string& inf3, int& inf4)
 {
@@ -123,5 +123,19 @@ void database::deleteStudent(string fileName, string id)
 			}
 		}
 		writeData(fileName, data);
+}
+
+void database::editStudent(fstream& plik, int id, Osoba osoba)
+{
+	plik.seekp((id - 1) * sizeof(Osoba)); // ustawiamy pozycję zapisu w pliku
+	plik.write(reinterpret_cast<const char*>(&osoba), sizeof(Osoba)); // zapisujemy osobę
+}
+
+Osoba database::wczytajOsobe(fstream& plik, int id)
+{
+	Osoba osoba;
+	plik.seekg((id - 1) * sizeof(Osoba)); // ustawiamy pozycję odczytu w pliku
+	plik.read(reinterpret_cast<char*>(&osoba), sizeof(Osoba)); // odczytujemy osobę
+	return osoba;
 }
 
