@@ -7,6 +7,13 @@
 #include <cstdio>
 using namespace std;
 
+struct Osoba {
+	int id;
+	string imie;
+	string nazwisko;
+	int wiek;
+};
+
 class database
 {
 public:
@@ -17,5 +24,7 @@ public:
 	vector<vector<string>> readData(string fileName);
 	void writeData(string fileName, vector<vector<string>> data);
 	void deleteStudent(string fileName, string id);
+	void editStudent(fstream& plik, int id, Osoba osoba);
+	Osoba wczytajOsobe(fstream& plik, int id);
 };
 
