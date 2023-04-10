@@ -1,3 +1,0 @@
-2;Andrzej;Nazim;18
-2;Andrzej;Nazim;18
-3;Andrzej;Nazim;18

@@ -13,18 +13,19 @@ int main()
 	string firstName;
 	string lastName;
 	int ID;
+	int _id;
 	int age;
 	int option;
 	string id_str;
-	Osoba osoba;
 
-	fstream plik("Input.txt", ios::in | ios::out | ios::binary);
+	fstream plik("c:\\tmp\\Input.txt");
 
 	//adding menu options
 	menu.addOption("1. Dodaj Studenta");
 	menu.addOption("2. Usun Studenta");
 	menu.addOption("3. aktualizuj Studenta");
 	menu.addOption("4. wyszukaj Studenta");
+	menu.addOption("5. wyszukaj Studenta po Imieniu");
 	menu.addOption("0. wylancz program");
 
 	while (true) {
@@ -37,38 +38,29 @@ int main()
 		switch (option)
 		{
 			case 1:
-				ID = db.lastid();
+				_id = s.getID();
+				ID = db.lastid(_id);
+
 				menu.getinformation(firstName, lastName, age);
 				db.saveinformation(++ID, firstName, lastName, age);
 				break;
 			case 2:
 				ID = menu.get_id();
 				id_str = menu.convid(ID);
-				db.deleteStudent("Input.txt", id_str);
+				db.deleteStudent("c:\\tmp\\Input.txt", id_str);
 				break;
 			case 3:
-				ID = menu.get_id();
-				osoba = db.wczytajOsobe(plik, ID);
-				if (osoba.id == 0) {
-					cout << "Nie znaleziono osoby o podanym ID." << endl;
-					return 0;
-				}
-				cout << "Aktualne dane osoby o ID " << osoba.id << ":" << endl;
-				cout << "Imie: " << osoba.imie << endl;
-				cout << "Nazwisko: " << osoba.nazwisko << endl;
-				cout << "Wiek: " << osoba.wiek << endl;
-				cout << "Podaj nowe imie: ";
-				cin >> osoba.imie;
-				cout << "Podaj nowe nazwisko: ";
-				cin >> osoba.nazwisko;
-				cout << "Podaj nowy wiek: ";
-				cin >> osoba.wiek;
-				db.editStudent(plik, ID, osoba);
-				plik.close();
+				ID = s.getID();
+				age = s.getage();
+				firstName = s.getfirstName();
+				lastName = s.getlastName();
+				db.fileEdit("c:\\tmp\\Input.txt",firstName,lastName,age,ID);
 				break;
 			case 4:
 				ID = menu.get_id();
 				db.findstudent(ID);
+				break;
+			case 5:
 				break;
 			case 0:
 				return 0;

@@ -8,7 +8,7 @@ void database::saveinformation(int& inf, string& inf2, string& inf3, int& inf4)
         }
 
         ofstream file_obj;
-        file_obj.open("Input.txt", ios::app);
+        file_obj.open("c:\\tmp\\Input.txt", ios::app);
 
         file_obj << inf << ";" << inf2 << ";" << inf3 << ";" << inf4 << "\n";
 
@@ -16,12 +16,13 @@ void database::saveinformation(int& inf, string& inf2, string& inf3, int& inf4)
     }
 }
 
-int database::lastid()
+int database::lastid(int _id)
 {
 
-	int last_id = 0;
+
+	int last_id = _id;
 	string line;
-	ifstream file("Input.txt");
+	ifstream file("c:\\tmp\\Input.txt");
 
 	if (file.is_open())
 	{
@@ -49,7 +50,7 @@ int database::lastid()
 
 int database::findstudent(int & search_id)
 {
-	ifstream infile("input.txt");
+	ifstream infile("c:\\tmp\\Input.txt");
 
 	if (!infile.is_open()) {
 		cout << "Nie mozna otworzyc pliku" << endl;
@@ -125,17 +126,76 @@ void database::deleteStudent(string fileName, string id)
 		writeData(fileName, data);
 }
 
-void database::editStudent(fstream& plik, int id, Osoba osoba)
+void database::fileEdit(string filename, string Name, string Surname, int age, int id)
 {
-	plik.seekp((id - 1) * sizeof(Osoba)); // ustawiamy pozycję zapisu w pliku
-	plik.write(reinterpret_cast<const char*>(&osoba), sizeof(Osoba)); // zapisujemy osobę
+	string edit;
+	string line;
+	vector<string> lines;
+
+
+
+	ifstream fin(filename);
+	ofstream temp("c:\\tmp\\temp.txt");
+
+	if (!temp.is_open()) {
+		std::cout << "CAN'T OPEN FILE" << std::endl;
+	}
+
+
+
+	while (getline(fin, line)) {
+		lines.push_back(line);
+	}
+	fin.close();
+
+
+
+	for (int i = 0; i < lines.size(); i++) {
+		cout << i << ": " << lines[i] << endl;
+	}
+
+
+
+	cout << "Which line do you want to edit: ";
+	cin >> edit;
+
+
+
+	int index_to_edit = stoi(edit);
+	if (index_to_edit >= 0 && index_to_edit < lines.size()) {
+		cout << "Enter new data:" << endl;
+		cout << "Name: ";
+		cin >> Name;
+		cout << "Surname: ";
+		cin >> Surname;
+		cout << "Age: ";
+		cin >> age;
+
+		lines[index_to_edit] = id + ";" + Name + ";" + Surname + ";" + to_string(age);
+	}
+	for (const auto& line : lines) {
+		temp << line << endl;
+	}
+	temp.close();
+
+	if (remove(filename.c_str()) != 0) {
+		perror("[remove] ERROR: ");
+	}
+	else {
+		cout << "FILE DELATED" << endl;
+	}
+
+	if (rename("c:\\tmp\\temp.txt", filename.c_str()) != 0) {
+		perror("[rename] ERROR: ");
+	}
+	else {
+		cout << "RE NAME SUCCESFUL" << endl;
+	}
+
 }
 
-Osoba database::wczytajOsobe(fstream& plik, int id)
-{
-	Osoba osoba;
-	plik.seekg((id - 1) * sizeof(Osoba)); // ustawiamy pozycję odczytu w pliku
-	plik.read(reinterpret_cast<char*>(&osoba), sizeof(Osoba)); // odczytujemy osobę
-	return osoba;
-}
+
+
+
+
 
