@@ -22,5 +22,7 @@ public:
 	void deleteStudent(string fileName, string id);
 
 	void fileEdit(string filename, string Name, string Surname, int age, int id);
+	void list(string file);
+	void findPersonByName(string name, string filename);
 };
 

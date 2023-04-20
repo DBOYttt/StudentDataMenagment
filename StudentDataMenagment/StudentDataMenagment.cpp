@@ -26,6 +26,7 @@ int main()
 	menu.addOption("3. aktualizuj Studenta");
 	menu.addOption("4. wyszukaj Studenta");
 	menu.addOption("5. wyszukaj Studenta po Imieniu");
+	menu.addOption("6. lista studentow");
 	menu.addOption("0. wylancz program");
 
 	while (true) {
@@ -61,6 +62,12 @@ int main()
 				db.findstudent(ID);
 				break;
 			case 5:
+				cout << "Wpisz imie studenta" << endl;
+				cin >> firstName;
+				db.findPersonByName(firstName, "c:\\tmp\\Input.txt");
+				break;
+			case 6:
+				db.list("c:\\tmp\\Input.txt");
 				break;
 			case 0:
 				return 0;

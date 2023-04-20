@@ -194,6 +194,32 @@ void database::fileEdit(string filename, string Name, string Surname, int age, i
 
 }
 
+void database::list(string file)
+{
+	std::ifstream f(file);
+
+	if (f.is_open())
+		std::cout << f.rdbuf();
+}
+
+void database::findPersonByName(string name, string filename)
+{
+	ifstream file(filename);
+	string line;
+	while (getline(file, line)) {
+		size_t pos = line.find(name); // znajdź pozycję nazwy w linii
+		if (pos != string::npos) { // jeśli nazwa została znaleziona w linii
+			cout << line << endl; // wypisz całą linię na ekran
+		}
+		else
+		{
+			cout << "Niczego takiego nie ma" << endl;
+		}
+	}
+	file.close();
+}
+
+
 
 
 
